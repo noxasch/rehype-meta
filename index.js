@@ -154,9 +154,10 @@ function ogUrl(data, root) {
 
 function ogTitle(data, root) {
   let value = data.og ? data.title : null;
-
+  const titleNode = ensure(data, root, 'title');
+  let title = titleNode.children.find((child) => child.type === 'text');
+  if (title.value && title.value !== undefined) value = title.value;
   if (value) {
-    const titleNode = ensure(data, root, 'title');
     let node = ensure(data, root, 'meta[property=og:title]');
     node.properties.content = value;
   }
